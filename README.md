@@ -1,6 +1,6 @@
 # Text / Image-to-3D 图文思维导图
 
-面向入门学习的三维生成技术地图：23 个细分类、37 篇代表论文、35 幅高清论文配图。
+面向入门学习的三维生成技术地图：23 个细分类、38 篇代表论文、36 幅高清论文配图。
 
 在线版本：[打开图文思维导图](https://text-image-3d-research-map.decentseal10.chatgpt.site/)。Sites 版本目前按站点权限访问；本仓库可独立下载并在本地运行。
 
@@ -10,6 +10,7 @@
 - 各方法的输入输出、机制简介、教学流程图、局限和原论文链接。
 - 包含 Dream Fields 原论文的框架图与结果图。
 - SDS 分支包含 DreamGaussian、GaussianDreamer、GSGEN，区分优化机制与 3D Gaussian 表示。
+- “场景生成 → 语言与程序组合”包含 LEGO-Anything，介绍 Image-to-Code 的 Blender 程序迭代，并附原论文框架图。
 - 点击论文名称展开详情；点击配图查看高清原图。页面无需构建，核心内容在禁用 JavaScript 时仍可阅读。
 
 ## 本地运行

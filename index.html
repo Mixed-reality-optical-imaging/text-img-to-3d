@@ -67,9 +67,10 @@
 <li class="route"><strong>逐视角补全</strong><small>补绘、深度与网格融合</small><ul class="works">
 <li><a data-paper href="#paper-s_text2room">Text2Room</a></li>
 </ul></li>
-<li class="route"><strong>语言与程序组合</strong><small>关系规划与资产装配</small><ul class="works">
+<li class="route"><strong>语言与程序组合</strong><small>关系规划、程序生成与资产组合</small><ul class="works">
 <li><a data-paper href="#paper-s_holodeck">Holodeck</a></li>
 <li><a data-paper href="#paper-s_scenelanguage">Scene Language</a></li>
+<li><a data-paper href="#paper-s_legoanything">LEGO-Anything</a></li>
 </ul></li>
 <li class="route"><strong>多实例联合扩散</strong><small>独立物体与关系共同建模</small><ul class="works">
 <li><a data-paper href="#paper-s_midi">MIDI</a></li>
@@ -352,6 +353,18 @@
 <p class="limit">边界：表示结构清楚不等于已经获得完整可靠的几何资产；具体能力取决于生成表示和渲染后端，不能视为通用世界编译器。</p>
 <figure><a href="mindmap_assets/vis_s_scenelanguage.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/vis_s_scenelanguage.png" alt="Scene Language：论文原图 · 方法接口流程图"></a><figcaption>论文原图 · 方法接口流程图 · PDF 第 4 页 · Fig. 3 (complete graphic, excluding original prose caption)<br>原文Fig.3展示场景语言到实体、渲染参数和图像的接口，不是完整神经网络训练架构。</figcaption></figure>
 <div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2025/html/Zhang_The_Scene_Language_Representing_Scenes_with_Programs_Words_and_Embeddings_CVPR_2025_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-s_legoanything"><summary>LEGO-Anything<small>语言与程序组合 · Agent / Image-to-Code</small></summary><div class="paper-body"><div class="meta">首次公开 2026-09-28 · arXiv 预印本 · 2609.36380v1</div><dl class="io"><dt>输入</dt><dd>单张 RGB 参考图像；基准另提供图像尺寸、水平视场和输出规范等公开元数据</dd><dt>输出</dt><dd>可执行 Blender 场景程序，以及构建的几何、材质、布局与相机；提交 .blend、.glb 和渲染图</dd></dl><p>把三维重建交给一个会看图和写建模脚本的编码智能体。它根据参考图像编写 Blender 程序，执行后检查场景与渲染结果，再修改代码，循环改善物体形状、摆放、相机和外观。最后保留能继续编辑、执行和查询的场景程序，而不是只输出一张看起来像三维的图片。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>读参考图像与任务规范</span></li>
+<li><span>编写／修改 Blender 场景代码</span></li>
+<li><span>执行代码并渲染</span></li>
+<li><span>对照参考图像检查结果</span></li>
+<li><span>再次修改或保留当前版本</span></li>
+<li><span>导出可执行场景与三维资产</span></li>
+</ol>
+<p class="note">这是逐实例的代码—执行—检查循环。本文的主要生成机制不是 SDS 梯度优化，也不是一次前馈直接预测三维。配套 LEGO-Plugin 用更好的初始化、参考图像约束的细化和版本控制改善循环；该插件不额外训练模型。这里的“语言与程序”指方法机制，主要输入仍是图像，不应仅因 Agent 内部使用语言而标为独立图文联合条件。</p>
+<p class="limit">边界：单张图像不能确定所有遮挡几何。论文观察到初始化不准、后续修改破坏已有结果、自我评价不可靠；程序可运行与几何、外观准确应分别评估。其主要几何评测针对参考视角可见表面，不能直接解释为完整背面也已恢复。</p>
+<figure><a href="mindmap_assets/s_legoanything_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/s_legoanything_fig2.png" alt="LEGO-Anything：论文原图 · Agent 场景构建框架"></a><figcaption>论文原图 · Agent 场景构建框架 · PDF 第 4 页 · Figure 2<br>Figure 2：依次阅读工作空间、可用动作、Blender 代码结构和场景构建工作流。图中 Agent 通过写代码、执行、渲染与检查推动场景修改；它不是把图像特征直接解码成网格的网络架构。该图由作者从一次 Agent 轨迹抽象得到，中文步骤为教学概括。来源：Li 等，LEGO-Anything，arXiv:2609.36380v1。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2609.36380" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
 <details class="paper" id="paper-s_midi"><summary>MIDI<small>多实例联合扩散</small></summary><div class="paper-body"><div class="meta">2025 · CVPR2025</div><dl class="io"><dt>输入</dt><dd>单张场景图像、物体区域及掩码等局部条件</dd><dt>输出</dt><dd>多个物体的三维潜表示与可分离三维实例</dd></dl><p>不是把场景压成一整块模型，而是为多个物体保留独立三维潜变量。各物体一边读取自己的图像区域，一边通过注意力交流，从而兼顾实例外观和场景关系，便于后续分离编辑。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
 <li><span>场景图像与实例条件</span></li>
 <li><span>各物体带噪潜变量</span></li>
@@ -502,7 +515,7 @@
 <p class="note">此处提供依据论文整理的中文框架，尚未收录该论文的原图。</p>
 <div class="sources"><a href="https://arxiv.org/abs/2312.02201" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
 </section>
-<footer>23 个细分类 · 37 篇代表工作 · 35 幅论文原图。中文流程为教学简化；原图注明完整框架、局部模块或结果。原综述检索截至 2026-10-13；2026-10-15 补充核验高斯生成方法。</footer>
+<footer>23 个细分类 · 38 篇代表工作 · 36 幅论文原图。中文流程为教学简化；原图注明完整框架、局部模块或结果。原综述检索截至 2026-10-13；2026-10-15 补充高斯生成方法，2026-10-18 补充 LEGO-Anything。</footer>
 </main>
 <script>
 document.querySelectorAll('a[data-paper]').forEach(link=>link.addEventListener('click',()=>{
