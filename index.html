@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Text/Image-to-3D 技术思维导图：分类、论文简介、中文信息流与高清框架图。">
+<title>Text / Image-to-3D 图文思维导图</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f5f7fb;color:#203047;font:17px/1.7 "Microsoft YaHei",system-ui,sans-serif}main{max-width:1500px;margin:auto;padding:30px 24px}h1{font-size:29px;margin:10px 0}h2{font-size:23px}h3{font-size:20px}a{color:#075e9b;text-decoration:none}a:hover{text-decoration:underline}a:focus-visible,summary:focus-visible{outline:3px solid #177fb8;outline-offset:4px}.intro{color:#536276}.root{text-align:center;margin:28px 0 0;padding:14px;font-weight:600;background:#183e60;color:white;border-radius:10px}.branches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;padding-top:25px}.branch{position:relative;min-width:0;background:white;border:1px solid #dbe3ec;border-radius:10px;padding:16px}.branch::before{content:"";position:absolute;top:-26px;left:50%;height:25px;width:1px;background:#8ea3b5}.branch h2{font-size:20px;margin:0 0 4px}.kind{font-size:14px;color:#607087}.tree{list-style:none;padding:0 0 0 13px;border-left:1px solid #ccd7e3;margin:18px 0 0}.route{position:relative;margin:18px 0}.route::before{content:"";position:absolute;top:14px;left:-13px;width:9px;border-top:1px solid #ccd7e3}.route strong{display:block;font-size:16px}.route small{display:block;color:#69788a}.works{padding:5px 0 0 13px;margin:0;list-style:none}.works li{margin:6px 0}.works a{display:inline-block;background:#edf5fb;border-radius:5px;padding:3px 7px;font-size:15px}.section{margin-top:42px}.paper{margin:14px 0;border:1px solid #d5dfeb;border-radius:10px;background:white;scroll-margin-top:20px}.paper summary{padding:17px 22px;cursor:pointer;font-weight:600}.paper summary small{font-weight:400;color:#69788a;margin-left:12px}.paper[open] summary{border-bottom:1px solid #e1e8ef}.paper-body{padding:20px 25px;max-width:1100px;margin:auto}.meta{color:#637288;font-size:14px}.io{display:grid;grid-template-columns:50px 1fr;gap:6px 10px}.io dt{color:#62718a}.io dd{margin:0}.flow{display:flex;flex-wrap:wrap;list-style:none;padding:0;gap:8px;align-items:center}.flow li{display:flex;align-items:center;gap:8px}.flow li+li::before{content:"→";color:#607087}.flow span{background:#ecf4f9;border:1px solid #d3e2ed;border-radius:6px;padding:7px 10px}.note{font-size:15px;color:#536276}.limit{border-left:3px solid #c7a062;padding-left:12px}figure{margin:24px 0}figure a{display:block}figure img{display:block;max-width:100%;max-height:850px;object-fit:contain;margin:auto;height:auto}figcaption{font-size:14px;color:#536276;margin-top:10px}.sources{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}footer{margin:40px 0;color:#607087;font-size:14px} [hidden]{display:none!important}
+@media(max-width:1100px){.branches{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:740px){main{padding:16px}.branches{grid-template-columns:repeat(2,minmax(0,1fr))}.paper-body{padding:16px}.paper summary small{display:block;margin-left:18px}.io{grid-template-columns:40px 1fr}}
+@media(max-width:470px){.branches{grid-template-columns:1fr}.flow{display:block}.flow li{margin:8px 0}.flow li+li::before{content:"↓"}h1{font-size:25px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.representation-group{font-size:13px;font-weight:600;color:#637288;border-top:1px solid #dbe3ec;padding-top:8px}.mechanism-note{padding:20px 25px;background:#eaf3fa;border:1px solid #cbddeb;border-radius:10px;margin:25px 0}.mechanism-note h3{margin-top:0}
+</style>
+</head>
+<body><main id="map-top">
+<a href="#map-top" aria-label="回到导图顶部">3D 生成研究导图</a>
+<h1>Text / Image-to-3D 图文思维导图</h1>
+<p class="intro">先看分类，再点论文名展开：输入与输出 → 中文信息流 → 方法简介 → 原论文框架图。图片可点击查看原始尺寸。</p>
+<p class="intro">文本／图像是<strong>条件</strong>；SDS、前馈重建等是<strong>机制</strong>；Mesh、NeRF、3DGS 是<strong>表示</strong>。混合方法允许跨类。</p>
+<div class="root">三维生成：四类任务 ＋ 图文联合条件</div>
+<div class="branches" aria-label="完整分类思维导图">
+<section class="branch"><h2>物体生成</h2><div class="kind">单个对象</div><ul class="tree">
+<li class="route"><strong>CLIP 语义监督</strong><small>逐个对象优化</small><ul class="works">
+<li><a data-paper href="#paper-o_dreamfields">Dream Fields</a></li>
+</ul></li>
+<li class="route"><strong>SDS / VSD</strong><small>扩散教师指导逐实例优化</small><ul class="works">
+<li class="representation-group">NeRF / 网格表示</li>
+<li><a data-paper href="#paper-o_dreamfusion">DreamFusion</a></li>
+<li><a data-paper href="#paper-o_magic3d">Magic3D</a></li>
+<li><a data-paper href="#paper-o_vsd">ProlificDreamer / VSD</a></li>
+<li class="representation-group">3D Gaussian 表示</li>
+<li><a data-paper href="#paper-o_screen_dreamgaussian">DreamGaussian</a></li>
+<li><a data-paper href="#paper-o_screen_gaussiandreamer">GaussianDreamer</a></li>
+<li><a data-paper href="#paper-o_gsgen">GSGEN</a></li>
+</ul></li>
+<li class="route"><strong>多视图扩散</strong><small>先协调不同视角</small><ul class="works">
+<li><a data-paper href="#paper-o_mvdream">MVDream</a></li>
+<li><a data-paper href="#paper-o_wonder3d">Wonder3D</a></li>
+</ul></li>
+<li class="route"><strong>前馈重建 / LRM</strong><small>共享网络预测三维</small><ul class="works">
+<li><a data-paper href="#paper-o_lrm">LRM</a></li>
+<li><a data-paper href="#paper-o_instantmesh">InstantMesh</a></li>
+</ul></li>
+<li class="route"><strong>摊销蒸馏</strong><small>把重复求解转入训练</small><ul class="works">
+<li><a data-paper href="#paper-o_att3d">ATT3D</a></li>
+</ul></li>
+<li class="route"><strong>原生 3D 生成</strong><small>在三维潜空间采样</small><ul class="works">
+<li><a data-paper href="#paper-o_clay">CLAY</a></li>
+<li><a data-paper href="#paper-o_trellis">TRELLIS</a></li>
+<li><a data-paper href="#paper-o_triposg">TripoSG</a></li>
+</ul></li>
+<li class="route"><strong>网格自回归</strong><small>逐步生成几何词序列</small><ul class="works">
+<li><a data-paper href="#paper-o_meshgpt">MeshGPT</a></li>
+</ul></li>
+<li class="route"><strong>几何与材质分工</strong><small>交叉管线 · 可重新照明</small><ul class="works">
+<li><a data-paper href="#paper-o_fantasia">Fantasia3D</a></li>
+<li><a data-paper href="#paper-o_assetgen">Meta 3D AssetGen</a></li>
+<li><a data-paper href="#paper-o_hunyuan21">Hunyuan3D 2.1</a></li>
+</ul></li>
+<li class="route"><strong>部件生成与补全</strong><small>交叉目标 · 可分离部件</small><ul class="works">
+<li><a data-paper href="#paper-o_partgen">PartGen</a></li>
+</ul></li>
+</ul></section>
+<section class="branch"><h2>场景生成</h2><div class="kind">空间与关系</div><ul class="tree">
+<li class="route"><strong>逐视角补全</strong><small>补绘、深度与网格融合</small><ul class="works">
+<li><a data-paper href="#paper-s_text2room">Text2Room</a></li>
+</ul></li>
+<li class="route"><strong>语言与程序组合</strong><small>关系规划与资产装配</small><ul class="works">
+<li><a data-paper href="#paper-s_holodeck">Holodeck</a></li>
+<li><a data-paper href="#paper-s_scenelanguage">Scene Language</a></li>
+</ul></li>
+<li class="route"><strong>多实例联合扩散</strong><small>独立物体与关系共同建模</small><ul class="works">
+<li><a data-paper href="#paper-s_midi">MIDI</a></li>
+</ul></li>
+<li class="route"><strong>世界生成系统</strong><small>规划、重建、分解与增强</small><ul class="works">
+<li><a data-paper href="#paper-s_worldgen">WorldGen</a></li>
+</ul></li>
+</ul></section>
+<section class="branch"><h2>人体与 Avatar</h2><div class="kind">形体与驱动</div><ul class="tree">
+<li class="route"><strong>人体先验＋优化</strong><small>模板提供结构约束</small><ul class="works">
+<li><a data-paper href="#paper-h_tada">TADA</a></li>
+<li><a data-paper href="#paper-h_humangaussian">HumanGaussian</a></li>
+</ul></li>
+<li class="route"><strong>单图生成式重建</strong><small>先补背面，再重建</small><ul class="works">
+<li><a data-paper href="#paper-h_sith">SiTH</a></li>
+</ul></li>
+<li class="route"><strong>人体潜表示生成</strong><small>结构化表示与参数驱动</small><ul class="works">
+<li><a data-paper href="#paper-h_tera">TeRA</a></li>
+</ul></li>
+</ul></section>
+<section class="branch"><h2>动态 4D</h2><div class="kind">物理时间变化</div><ul class="tree">
+<li class="route"><strong>多先验蒸馏</strong><small>图像管外观，视频管运动</small><ul class="works">
+<li><a data-paper href="#paper-d_4dfy">4D-fy</a></li>
+</ul></li>
+<li class="route"><strong>规范形状＋形变</strong><small>同一对象随时间变形</small><ul class="works">
+<li><a data-paper href="#paper-d_dg4d">DreamGaussian4D</a></li>
+</ul></li>
+<li class="route"><strong>前馈时序重建</strong><small>视频直接映射到动态三维</small><ul class="works">
+<li><a data-paper href="#paper-d_l4gm">L4GM</a></li>
+</ul></li>
+<li class="route"><strong>原生三维时序生成</strong><small>三维潜变量序列扩散</small><ul class="works">
+<li><a data-paper href="#paper-d_sculpt4d">Sculpt4D</a></li>
+</ul></li>
+</ul></section>
+<section class="branch"><h2>图文联合</h2><div class="kind">横向条件分支</div><ul class="tree">
+<li class="route"><strong>三维潜空间联合</strong><small>图文直接影响三维潜变量</small><ul class="works">
+<li><a data-paper href="#paper-o_screen_sdfusion">SDFusion</a></li>
+<li><a data-paper href="#paper-j_tigon">TIGON</a></li>
+</ul></li>
+<li class="route"><strong>逐对象联合优化</strong><small>图文先验共同给修改信号</small><ul class="works">
+<li><a data-paper href="#paper-j_ipdreamer">IPDreamer</a></li>
+</ul></li>
+<li class="route"><strong>联合多视图先验</strong><small>先协调图文与不同视角</small><ul class="works">
+<li><a data-paper href="#paper-j_imagedream">ImageDream</a></li>
+</ul></li>
+</ul></section>
+</div>
+<section class="section"><h2>物体生成 · 论文与框架</h2><p class="note">7 类主要机制＋2 类交叉管线／目标</p>
+<details class="paper" id="paper-o_dreamfields"><summary>Dream Fields<small>CLIP 语义监督</small></summary><div class="paper-body"><div class="meta">首次公开 2021 · CVPR 2022</div><dl class="io"><dt>输入</dt><dd>文本提示</dd><dt>输出</dt><dd>神经辐射场（NeRF）</dd></dl><p>先给杯子一组可调的三维参数，再从不同角度渲染图片，用图文编码器判断是否符合描述。相似度经渲染器传回并修改当前对象，稀疏性与背景等正则帮助限制不合理形状。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文字与初始化神经场</span></li>
+<li><span>随机相机渲染</span></li>
+<li><span>图文相似度与正则</span></li>
+<li><span>更新当前三维参数</span></li>
+</ol>
+<p class="limit">边界：语义相似并不提供精确几何约束，仍可能得到模糊或连接不合理的结构。</p>
+<figure><a href="mindmap_assets/dreamfields_fig1_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/dreamfields_fig1_fig2.png" alt="Dream Fields：论文原图 · 方法框架与生成示例"></a><figcaption>论文原图 · 方法框架与生成示例 · PDF 第 1 页 · Figure 1（方法）与 Figure 2（结果）<br>左侧 Figure 1：同一个神经辐射场从随机相机视角渲染，经图像增强后由冻结的 CLIP 图像／文本编码器计算语义对齐损失；梯度经渲染器更新三维参数。上方透射率损失鼓励稀疏，减少空间被不必要的密度填满。右侧 Figure 2：作者展示的多视角生成样例及透射率图，属于结果而非额外训练模块。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2112.01455" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<aside class="mechanism-note" id="gaussian-guide"><h3>SDS / VSD 与 3D Gaussian 是什么关系？</h3><p><strong>机制回答“怎么改”，表示回答“改什么”。</strong>DreamFusion 通过 SDS 更新神经场参数；换成 3DGS 后，仍可渲染、加噪、请教师预测噪声，然后经可微渲染器更新高斯的位置、大小、朝向、颜色和不透明度。</p><ol class="flow"><li><span>当前高斯物体</span></li><li><span>渲染图片并加噪</span></li><li><span>扩散教师给出 SDS 反馈</span></li><li><span>回传更新高斯参数</span></li><li><span>换视角重复</span></li></ol><p>新增的 DreamGaussian、GaussianDreamer、GSGEN 均是 <strong>SDS 系方法</strong>。ProlificDreamer 的 VSD 另外学习当前渲染分布，使用教师与辅助模型的预测差；不能因为有高斯、两种先验或两个阶段，就把方法称为 VSD。</p><p class="note">同样输出高斯的前馈重建模型，应放在 LRM／前馈重建类。分类以生成机制为主，在机制内部标注表示。</p></aside>
+<details class="paper" id="paper-o_dreamfusion"><summary>DreamFusion<small>SDS / VSD</small></summary><div class="paper-body"><div class="meta">首次公开 2022 · ICLR 2023</div><dl class="io"><dt>输入</dt><dd>文本提示</dd><dt>输出</dt><dd>带密度、基色的神经辐射场；可导出网格</dd></dl><p>每轮先渲染当前对象并加入记录过的随机噪声，再让冻结的扩散教师预测噪声。预测与实际噪声之差经渲染链形成参数更新，多轮改变对象；随机相机与光照也参与约束几何。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>当前三维对象渲染</span></li>
+<li><span>加噪与冻结教师预测</span></li>
+<li><span>构造SDS残差</span></li>
+<li><span>经渲染链更新三维</span></li>
+</ol>
+<p class="limit">边界：二维教师不知道唯一正确的背面，优化仍可能出现多正脸、过饱和和几何歧义。</p>
+<figure><a href="mindmap_assets/course35_dreamfusion.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/course35_dreamfusion.png" alt="DreamFusion：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 5 页 · Figure 3<br>原文PDF第5页Figure 3：相机、光照、NeRF、冻结Imagen及回传路径；原文架构图，不是结果对比。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2209.14988" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_magic3d"><summary>Magic3D<small>SDS / VSD</small></summary><div class="paper-body"><div class="meta">首次公开 2022 · CVPR 2023</div><dl class="io"><dt>输入</dt><dd>文本提示</dd><dt>输出</dt><dd>粗阶段神经场 → 纹理网格</dd></dl><p>先用低分辨率扩散先验优化粗神经场，找到整体形状，再提取网格并用高分辨率先验细化。两个阶段改变了表示、渲染方式和监督分辨率，因此提升不能只归因于一个损失公式。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>低分辨率扩散指导</span></li>
+<li><span>粗神经场优化</span></li>
+<li><span>可微提取网格</span></li>
+<li><span>高分辨率网格细化</span></li>
+</ol>
+<p class="limit">边界：粗阶段形成的错误可能被细化继承，高分辨率优化也仍需逐对象计算。</p>
+<figure><a href="mindmap_assets/o_magic3d_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_magic3d_pipeline.png" alt="Magic3D：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 4 页 · Figure 2<br>原文Figure 2的粗到细完整管线；先看左侧神经场，再看右侧网格与高分辨率监督。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2211.10440" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_vsd" open><summary>ProlificDreamer / VSD<small>SDS / VSD</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · NeurIPS 2023</div><dl class="io"><dt>输入</dt><dd>文本提示；辅助模型还接收相机条件</dd><dt>输出</dt><dd>NeRF / 网格样本及其渲染分布</dd></dl><p>在冻结教师之外，增加一个用低秩适配训练的辅助模型，让它学习当前对象的渲染分布。两者预测之差用于更新三维参数，另一条训练路径只更新辅助模型；二者交替进行，不能把低秩适配当成直接修改杯子。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>当前对象渲染与加噪</span></li>
+<li><span>冻结教师和辅助模型预测</span></li>
+<li><span>预测差经渲染链更新三维</span></li>
+<li><span>当前渲染训练LoRA</span></li>
+<li><span>交替重复两种更新</span></li>
+</ol>
+<p class="note">这里包含两个交替优化回路；第3项更新三维参数，第4项更新LoRA，不能画成LoRA直接生成或修改网格。</p>
+<p class="limit">边界：辅助模型带来额外训练开销，整套系统收益还受初始化、时间调度与细化课程影响。</p>
+<h3>LoRA 在这里负责什么？</h3><p>冻结的大模型保留原有知识；LoRA 用两块较小的可训练矩阵，给部分权重增加低秩更新。辅助模型用当前三维对象渲染的图片加上已知噪声训练，学习当前渲染分布。教师与辅助模型的预测差用于更新三维参数。更新三维和训练 LoRA 交替进行，LoRA 本身不直接修改网格。</p>
+<figure><a href="mindmap_assets/vis_vsd.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/vis_vsd.png" alt="ProlificDreamer / VSD：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 5 页 · Figure 2<br>原文Figure 2：上方回传更新三维粒子，下方去噪训练更新LoRA；务必分别读两条更新路径。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2305.16213" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_screen_dreamgaussian"><summary>DreamGaussian<small>SDS · 3D Gaussian</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · ICLR 2024</div><dl class="io"><dt>输入</dt><dd>文本提示，或单张参考图像＋前景掩码；图像分支还使用相对相机条件</dd><dt>输出</dt><dd>先优化 3D Gaussians，再提取带 UV 纹理的网格</dd></dl><p>把物体想成一团可调整的彩色半透明小椭球：每个高斯都有位置、大小、朝向、颜色和不透明度。先从随机视角把这团高斯渲染成图片，再用 SDS 将扩散教师的反馈传回高斯参数，并逐步增加高斯数量。图像条件使用 Zero-1-to-3 XL，文本条件使用 Stable Diffusion。随后从高斯密度中提取网格，烘焙纹理，再细化 UV 纹理。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本／图像与随机高斯初始化</span></li>
+<li><span>随机相机渲染＋加噪</span></li>
+<li><span>SDS 更新高斯并致密化</span></li>
+<li><span>局部密度查询提取网格</span></li>
+<li><span>多步去噪目标细化 UV 纹理</span></li>
+</ol>
+<p class="note">机制是 SDS，不是 VSD：这里没有用当前渲染训练 LoRA 辅助分布的 VSD 回路。末阶段改用多步去噪得到图像目标，再以 MSE 优化纹理，不应把整条管线都写成 SDS。</p>
+<p class="limit">边界：SDS 生成的高斯可能模糊；改用 3DGS 并没有消除单视图背面歧义或保证精确表面。最终网格质量还依赖密度阈值、网格提取与纹理细化。</p>
+<figure><a href="mindmap_assets/o_dreamgaussian_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_dreamgaussian_fig2.png" alt="DreamGaussian：论文原图 · 完整方法框架"></a><figcaption>论文原图 · 完整方法框架 · PDF 第 4 页 · Figure 2<br>Figure 2，PDF 第 4 页：左上看 SDS 如何更新 3D Gaussians；右上是高斯到网格的转换；下方是 UV 纹理细化。蓝色 Optimize 箭头表示被更新的对象，三个阶段的优化目标并不相同。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2309.16653" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_screen_gaussiandreamer"><summary>GaussianDreamer<small>SDS · 3D Gaussian</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · CVPR 2024</div><dl class="io"><dt>输入</dt><dd>文本提示；物体分支采用预训练 Shap-E 提供初始几何</dd><dt>输出</dt><dd>可直接进行 splatting 渲染的 3D Gaussians</dd></dl><p>先请三维生成模型提供一个粗略形状，再请二维扩散教师补细节。物体分支把 Shap-E 生成的粗网格转换为带颜色的点，经过带噪点生长和颜色扰动，用它们初始化高斯。随后把高斯渲染成二维图片，利用 SDS 更新高斯参数。三维先验主要用于初始化，二维先验负责后续优化。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本→三维先验生成粗形状</span></li>
+<li><span>转换点云＋点生长／颜色扰动</span></li>
+<li><span>初始化 3D Gaussians</span></li>
+<li><span>二维扩散模型以 SDS 优化</span></li>
+<li><span>直接 splatting 渲染</span></li>
+</ol>
+<p class="note">它使用 SDS，不需要 VSD 的 LoRA 辅助模型。原图还列出 text-to-motion 初始化分支；该分支会选取人体姿态并转为 SMPL，不能只凭这张框架图就判定输出为完整动态 4D。</p>
+<p class="limit">边界：初始三维模型的几何错误会影响后续优化；二维教师仍可能带来多视图不一致。最终高斯可直接渲染，但不等于已获得闭合网格或可重新照明的 PBR 材质。</p>
+<figure><a href="mindmap_assets/o_gaussiandreamer_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_gaussiandreamer_fig2.png" alt="GaussianDreamer：论文原图 · 完整方法框架"></a><figcaption>论文原图 · 完整方法框架 · PDF 第 3 页 · Figure 2<br>Figure 2，PDF 第 3 页：左半部分是三维先验初始化，右半部分才是二维教师指导的反复优化。图中的 7 秒和 15 分钟是作者报告；正文实验为单张 RTX 3090、1200 次优化、batch size 4，不能直接与其他硬件或协议下的数字比较。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2024/html/Yi_GaussianDreamer_Fast_Generation_from_Text_to_3D_Gaussians_by_Bridging_CVPR_2024_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_gsgen"><summary>GSGEN<small>SDS · 3D Gaussian</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · CVPR 2024 · Text-to-3D using Gaussian Splatting</div><dl class="io"><dt>输入</dt><dd>文本提示；预训练 Point-E 提供点云初始化与三维先验</dd><dt>输出</dt><dd>显式 3D Gaussians，经过几何优化和外观细化</dd></dl><p>先用 Point-E 产生粗点云，初始化高斯的位置与颜色。几何阶段同时接受两种反馈：二维扩散模型看渲染图像，三维点云扩散模型看高斯中心的位置，从外观与空间结构两个方向约束高斯。然后进入外观阶段，主要使用二维指导，并通过紧凑性驱动的致密化补充高斯、丰富细节。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本→Point-E 点云初始化</span></li>
+<li><span>几何阶段：二维 SDS＋三维 SDS</span></li>
+<li><span>联合更新高斯形状与外观</span></li>
+<li><span>外观阶段：二维指导＋致密化</span></li>
+<li><span>输出可渲染高斯资产</span></li>
+</ol>
+<p class="note">与 GaussianDreamer 的主要区别：三维先验不只负责起点，还在几何优化阶段持续提供三维 SDS。这里的三维教师预测点云噪声，与 VSD 中学习当前渲染分布的 LoRA 辅助模型作用不同。</p>
+<p class="limit">边界：三维点云先验能约束粗结构，但受预训练模型覆盖范围限制；二维细节指导仍不能保证正确材质或拓扑。高斯表示本身也不是网格连通关系。</p>
+<figure><a href="mindmap_assets/o_gsgen_fig3.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_gsgen_fig3.png" alt="GSGEN：论文原图 · 完整方法框架"></a><figcaption>论文原图 · 完整方法框架 · PDF 第 4 页 · Figure 3<br>Figure 3，PDF 第 4 页：先读几何优化阶段的二维／三维指导，再读外观细化。三维 SDS 约束高斯中心所构成的点云；二维 SDS 经渲染器回传。不要把两位教师误读为 VSD 的教师与 LoRA 辅助模型。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2024/html/Chen_Text-to-3D_using_Gaussian_Splatting_CVPR_2024_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_mvdream"><summary>MVDream<small>多视图扩散</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · ICLR 2024</div><dl class="io"><dt>输入</dt><dd>文本和相机条件</dd><dt>输出</dt><dd>联合生成的多视图图像；再以多视图SDS优化三维表示</dd></dl><p>将同一对象的多个视角放进共同的扩散过程，通过跨视图注意力和相机条件交换信息。这个多视图模型还能作为三维优化的教师，让不同观察少一些冲突；它本身的直接输出仍是图像。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本与相机条件</span></li>
+<li><span>联合多视图扩散</span></li>
+<li><span>作为多视图SDS教师</span></li>
+<li><span>优化共享三维对象</span></li>
+</ol>
+<p class="note">flow概括其三维生成用法；所选原图则展示多视图教师训练，二者阶段不同，界面中应标明。</p>
+<p class="limit">边界：多视图统计一致性不是严格几何证明，合成数据和固定视角布局仍带来偏差。</p>
+<figure><a href="mindmap_assets/o_mvdream_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_mvdream_pipeline.png" alt="MVDream：论文原图 · 训练流程"></a><figcaption>论文原图 · 训练流程 · PDF 第 4 页 · Figure 3<br>原文Figure 3展示训练而非完整三维推理：左侧混合二维与多视图训练，右侧为DreamBooth适配。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2308.16512" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_wonder3d"><summary>Wonder3D<small>多视图扩散</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · CVPR 2024</div><dl class="io"><dt>输入</dt><dd>单张参考图像</dd><dt>输出</dt><dd>多视图颜色与法线 → 融合网格</dd></dl><p>从一张图片共同生成多个视角的颜色图和法线图，让不同视角以及两种信号互相交换信息。法线说明表面的局部朝向，随后与颜色一起用于几何融合；它们仍是模型预测，并非额外拍到的真实观测。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>单图条件编码</span></li>
+<li><span>多视图颜色与法线扩散</span></li>
+<li><span>跨视图与跨域交互</span></li>
+<li><span>几何感知融合为网格</span></li>
+</ol>
+<p class="limit">边界：若生成法线与颜色互相矛盾或遗漏遮挡区域，融合仍可能抹平细节或产生缺口。</p>
+<figure><a href="mindmap_assets/o_wonder_attention.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_wonder_attention.png" alt="Wonder3D：论文原图 · 关键模块"></a><figcaption>论文原图 · 关键模块 · PDF 第 5 页 · Figure 3<br>原文Figure 3仅展开多视图跨域Transformer块，不是包含最终法线融合的完整管线。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2310.15008" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_lrm"><summary>LRM<small>前馈重建 / LRM</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · ICLR 2024</div><dl class="io"><dt>输入</dt><dd>单张图像与相机信息</dd><dt>输出</dt><dd>三平面特征支撑的神经辐射场</dd></dl><p>先在大量对象上训练共享的重建网络，再把新图的视觉特征与相机信息转成三平面表示。查询三平面可以得到空间中的密度和颜色，用于渲染新视角；单个对象不再从随机网络开始长期优化。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>图像与相机信息</span></li>
+<li><span>视觉特征编码</span></li>
+<li><span>三平面解码</span></li>
+<li><span>查询密度与颜色</span></li>
+<li><span>体渲染新视角</span></li>
+</ol>
+<p class="limit">边界：模型可能补出可信却不真实的背面，相机假设不准也会导致形变。</p>
+<figure><a href="mindmap_assets/o_lrm_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_lrm_pipeline.png" alt="LRM：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 4 页 · Figure 1<br>原文Figure 1包含视觉编码、相机调制、三平面与NeRF体渲染；它不是直接输出人工拓扑网格的网络。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2311.04400" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_instantmesh"><summary>InstantMesh<small>前馈重建 / LRM</small></summary><div class="paper-body"><div class="meta">首次公开 2024 · arXiv technical report</div><dl class="io"><dt>输入</dt><dd>单张参考图像；前端生成六视图</dd><dt>输出</dt><dd>三平面 → FlexiCubes可微表面 → 纹理网格</dd></dl><p>先由单图生成六个视角，再用共享重建网络预测三平面，经过可微表面提取得到网格。训练时外观和几何损失可以穿过网格环节回传，因此学习目标更直接面向最终表面，而非只优化神经渲染。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>单图生成六视图</span></li>
+<li><span>稀疏视图共享重建</span></li>
+<li><span>预测三平面</span></li>
+<li><span>可微提取网格</span></li>
+<li><span>输出纹理网格</span></li>
+</ol>
+<p class="note">上方为推理流程；论文原图最右侧的外观／几何渲染损失用于训练重建网络。</p>
+<p class="limit">边界：有限网格分辨率会损失细节，生成视图中的矛盾也不会因使用网格而自动消失。</p>
+<figure><a href="mindmap_assets/vis_instantmesh.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/vis_instantmesh.png" alt="InstantMesh：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 3 页 · Figure 2, complete architecture body; original English caption omitted<br>原文Figure 2：六视图、三平面与FlexiCubes；最右侧是训练用渲染通道，不是方法排名。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2404.07191" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_att3d"><summary>ATT3D<small>摊销蒸馏</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · ICCV 2023</div><dl class="io"><dt>输入</dt><dd>文本提示</dd><dt>输出</dt><dd>条件神经场</dd></dl><p>不为每条提示单独从头优化对象，而是在训练时让共享网络处理许多提示，并接受扩散教师的指导。训练完成后，新提示经网络前馈得到神经场；节省的是每次请求的迭代，并没有省掉离线训练成本。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>训练提示集合</span></li>
+<li><span>共享条件网络生成神经场</span></li>
+<li><span>渲染并接收教师指导</span></li>
+<li><span>更新共享网络</span></li>
+<li><span>推理阶段文本前馈生成</span></li>
+</ol>
+<p class="note">前四步属于共享网络的离线训练；最后一步才是新提示的推理。</p>
+<p class="limit">边界：未见提示和复杂组合的泛化受训练提示分布影响，前馈速度不代表无限开放域能力。</p>
+<p class="note">此处提供依据论文整理的中文框架，尚未收录该论文的原图。</p>
+<div class="sources"><a href="https://arxiv.org/abs/2306.07349" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_clay"><summary>CLAY<small>原生 3D 生成</small></summary><div class="paper-body"><div class="meta">首次公开 2024 · ACM Transactions on Graphics 43(4), SIGGRAPH 2024</div><dl class="io"><dt>输入</dt><dd>文本；可选图像、体素、包围盒、点云等控制接口</dd><dt>输出</dt><dd>多分辨率三维几何潜变量；几何与材质资产</dd></dl><p>先把三维资产压缩成能保留形状的潜变量，再训练条件扩散模型生成这种三维编码，并解码出几何。材质另有生成模块，图像或结构信息可接入控制接口；各接口并不意味着每次都同时输入。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>离线学习三维几何编码</span></li>
+<li><span>条件控制潜空间扩散</span></li>
+<li><span>解码生成几何</span></li>
+<li><span>材质生成形成资产</span></li>
+</ol>
+<p class="note">几何编码器先离线训练；推理时在其潜空间中生成，再解码几何并生成材质。</p>
+<p class="limit">边界：数据清洗与编码压缩可能改变细薄结构和复杂拓扑，模型规模本身不能保证所有细节正确。</p>
+<figure><a href="mindmap_assets/vis_clay.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/vis_clay.png" alt="CLAY：论文原图 · 系统概览"></a><figcaption>论文原图 · 系统概览 · PDF 第 4 页 · Figure 2<br>原文Figure 2是几何/材质模型与条件接口的系统概览，混有生成示例；不是逐层网络架构，也不作性能证据。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2406.13897" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_trellis"><summary>TRELLIS<small>原生 3D 生成</small></summary><div class="paper-body"><div class="meta">首次公开 2024 · CVPR 2025</div><dl class="io"><dt>输入</dt><dd>文本或单张图像（分别的条件生成设置）</dd><dt>输出</dt><dd>稀疏结构化潜表示SLAT；可解码高斯、辐射场或网格</dd></dl><p>先决定三维空间中哪些位置承载内容，再生成这些位置的局部潜特征，把形状与外观组织在同一稀疏表示里。不同解码器可以得到高斯、辐射场或网格；这些输出共享表示，但不是无损的文件格式转换。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文字或图像条件</span></li>
+<li><span>生成稀疏空间结构</span></li>
+<li><span>流模型生成局部潜特征</span></li>
+<li><span>选择解码器</span></li>
+<li><span>得到高斯／场／网格</span></li>
+</ol>
+<p class="limit">边界：不同解码器的表面与外观表现不同，局部潜变量也不自动保证编辑只影响局部。</p>
+<figure><a href="mindmap_assets/o_trellis_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_trellis_pipeline.png" alt="TRELLIS：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 4 页 · Figure 2<br>原文Figure 2上半部是资产编码/解码训练，下半部是两阶段流生成；必须分开训练和采样理解。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2412.01506" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_triposg"><summary>TripoSG<small>原生 3D 生成</small></summary><div class="paper-body"><div class="meta">首次公开 2025 · arXiv technical report</div><dl class="io"><dt>输入</dt><dd>单张图像；图像经DINO与CLIP编码</dd><dt>输出</dt><dd>SDF几何潜变量 → 无纹理网格</dd></dl><p>用带符号距离等监督训练形状编码器，再让图像条件流模型从噪声生成几何潜变量，最后解码出表面。图中两类视觉特征帮助对齐输入与形状；它聚焦无纹理几何，材质需要额外的处理环节。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>图像双视觉特征编码</span></li>
+<li><span>噪声几何潜变量</span></li>
+<li><span>条件流模型采样</span></li>
+<li><span>解码带符号距离场</span></li>
+<li><span>提取无纹理网格</span></li>
+</ol>
+<p class="limit">边界：预处理中的水密化和内部结构删除会改变目标形状，精细表面也不等于正确内部拓扑。</p>
+<figure><a href="mindmap_assets/o_triposg_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_triposg_pipeline.png" alt="TripoSG：论文原图 · 生成网络"></a><figcaption>论文原图 · 生成网络 · PDF 第 5 页 · Figure 3<br>原文Figure 3展开图像条件生成网络、交叉注意力和MoE；不包含完整SDF VAE训练管线，不能把各规模变体混为一个模型。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2502.06608" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_meshgpt"><summary>MeshGPT<small>网格自回归</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · CVPR 2024</div><dl class="io"><dt>输入</dt><dd>无条件网格生成或已有几何token上下文；非任意文本/图像条件系统</dd><dt>输出</dt><dd>离散几何token → 三角面序列</dd></dl><p>先从训练网格学习离散的几何词表，再让自回归网络逐步预测词表序列，并解码成三角面。它直接学习网格组织方式，可作为资产生成的基础组件；原始工作不能被当成完整的开放文本到三维系统。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>离线：网格局部几何编码</span></li>
+<li><span>残差量化学习词表</span></li>
+<li><span>采样：自回归预测几何词</span></li>
+<li><span>解码三角面网格</span></li>
+</ol>
+<p class="note">前两项概括词表训练，后两项概括序列生成；原图只支持词表/量化模块说明。</p>
+<p class="limit">边界：量化误差、面数预算与序列长度限制表达能力，生成三角面并不保证全部拓扑合法。</p>
+<figure><a href="mindmap_assets/o_meshgpt_tokens.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_meshgpt_tokens.png" alt="MeshGPT：论文原图 · 表示模块"></a><figcaption>论文原图 · 表示模块 · PDF 第 3 页 · Figure 3<br>原文Figure 3是几何词表自编码与残差面量化模块；它不展示完整自回归Transformer，更不是文本到网格管线。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2311.15475" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_fantasia"><summary>Fantasia3D<small>几何与材质分工</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · ICCV 2023</div><dl class="io"><dt>输入</dt><dd>文本提示</dd><dt>输出</dt><dd>可微表面网格与空间变化BRDF材质参数</dd></dl><p>先以法线和轮廓等形状信号优化几何，再在已有表面上优化基色、粗糙度等材质参数。分阶段设计减少颜色补偿形状错误的机会，让输出能够接受新的光照，而不是只在展示视角看起来像照片。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本与初始表面</span></li>
+<li><span>法线与轮廓指导几何</span></li>
+<li><span>渲染指导材质优化</span></li>
+<li><span>输出带材质网格</span></li>
+</ol>
+<p class="limit">边界：材质参数与光照的解释仍有歧义，支持重新照明不等于测得了真实材料。</p>
+<figure><a href="mindmap_assets/o_fantasia_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_fantasia_pipeline.png" alt="Fantasia3D：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 4 页 · Figure 3<br>原文Figure 3分开几何建模与外观建模；两者都用扩散指导，图中参数是可渲染材质，不是真值测量。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2303.13873" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_assetgen"><summary>Meta 3D AssetGen<small>几何与材质分工</small></summary><div class="paper-body"><div class="meta">首次公开 2024 · arXiv version</div><dl class="io"><dt>输入</dt><dd>文本提示；通过生成多视图进入重建器</dd><dt>输出</dt><dd>三平面SDF → 网格与PBR贴图</dd></dl><p>先生成同一对象的带光照视图和基色视图，再由三维重建器预测形状与材料，最后细化贴图。分开两种图像有助于避免把阴影直接画进基色；整个流程连接多视图生成、重建和资产后处理。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本生成双类多视图</span></li>
+<li><span>三平面重建</span></li>
+<li><span>预测距离场与材质</span></li>
+<li><span>提取网格并投影纹理</span></li>
+<li><span>细化PBR贴图</span></li>
+</ol>
+<p class="limit">边界：不可见材质仍需推断，内部材质评测数据也限制了外部完全复现实验。</p>
+<figure><a href="mindmap_assets/o_assetgen_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_assetgen_pipeline.png" alt="Meta 3D AssetGen：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 4 页 · Figure 2<br>原文Figure 2包含带光照/基色视图、三平面SDF、材质分支和纹理细化；不同颜色标注不同阶段。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2407.02445" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_hunyuan21"><summary>Hunyuan3D 2.1<small>几何与材质分工</small></summary><div class="paper-body"><div class="meta">首次公开 2025 · arXiv technical report</div><dl class="io"><dt>输入</dt><dd>单张图像；材质阶段还接收生成几何的法线等条件</dd><dt>输出</dt><dd>SDF解码网格与基色、金属度、粗糙度贴图</dd></dl><p>先从图像生成几何，再结合参考图与几何条件生成基色、金属度和粗糙度等材质通道。材质网络在不同视角间交换信息，并利用多光照训练约束，让材料与当前照明尽量分开表达。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>图像条件形状流生成</span></li>
+<li><span>解码距离场并提取网格</span></li>
+<li><span>几何条件进入材质模型</span></li>
+<li><span>多视图材质预测</span></li>
+<li><span>输出PBR资产</span></li>
+</ol>
+<p class="limit">边界：报告中的生产可用定位不等于所有拓扑与引擎接口均已验证，单图材料分解也仍然多解。</p>
+<figure><a href="mindmap_assets/vis_hunyuan21.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/vis_hunyuan21.png" alt="Hunyuan3D 2.1：论文原图 · 材质子网络"></a><figcaption>论文原图 · 材质子网络 · PDF 第 6 页 · Figure 4<br>原文Figure 4只展示材质生成架构：参考分支、几何条件、多视图注意力及材质输出；不包括前置形状流模型。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2506.15442" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_partgen"><summary>PartGen<small>部件生成与补全</small></summary><div class="paper-body"><div class="meta">首次公开 2024 · CVPR 2025</div><dl class="io"><dt>输入</dt><dd>文本、单张图像或已有三维对象（三种任务入口）</dd><dt>输出</dt><dd>多个可分别处理的三维部件及其组合</dd></dl><p>先获得对象的多个视角并保持部件分割一致，再根据整体上下文补全每个部件的不可见部分，最后分别重建成三维。这样可以单独处理帽子、轮子等组成单位，但还没有自动得到真实机械连接。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>获得对象多视图</span></li>
+<li><span>跨视图部件分割</span></li>
+<li><span>结合整体上下文补全</span></li>
+<li><span>逐部件三维重建</span></li>
+<li><span>组合可分离部件</span></li>
+</ol>
+<p class="limit">边界：语义部件不天然包含关节、运动轴或接触约束，遮挡补全仍可能偏离真实结构。</p>
+<figure><a href="mindmap_assets/o_partgen_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_partgen_pipeline.png" alt="PartGen：论文原图 · 方法流程"></a><figcaption>论文原图 · 方法流程 · PDF 第 4 页 · Figure 2<br>原文Figure 2完整流程：多视图、分割、部件补全、独立重建；右侧分开显示是部件输出，不等于机械运动验证。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2412.18608" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+</section>
+<section class="section"><h2>场景生成 · 论文与框架</h2><p class="note">生成、重建与资产组合可在同一系统中协作</p>
+<details class="paper" id="paper-s_text2room"><summary>Text2Room<small>逐视角补全</small></summary><div class="paper-body"><div class="meta">2023 · ICCV2023</div><dl class="io"><dt>输入</dt><dd>文本提示与逐步选择的相机视角</dd><dt>输出</dt><dd>带纹理的显式三角网格</dd></dl><p>像一边走进房间一边搭建模型：已有网格保存看过的部分，新视角中的空白交给图像模型补绘，再用深度估计把像素变回表面。它把二维生成接成可持续扩展的三维场景。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本与相机视角</span></li>
+<li><span>已有网格重投影与补绘</span></li>
+<li><span>深度预测及对齐</span></li>
+<li><span>网格融合</span></li>
+<li><span>补全视角循环</span></li>
+</ol>
+<p class="limit">边界：深度误差可能累积成破洞或拉伸；覆盖范围依赖相机路径，不能由展示图推出完整封闭几何或物体级可编辑性。</p>
+<figure><a href="mindmap_assets/s_text2room_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/s_text2room_fig2.png" alt="Text2Room：论文原图 · 方法流程图"></a><figcaption>论文原图 · 方法流程图 · PDF 第 3 页 · Fig. 2<br>原文Fig.2展示生成与补全两个阶段及循环，可解释重投影—补绘—网格更新；不是单纯效果对比图。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/ICCV2023/html/Hollein_Text2Room_Extracting_Textured_3D_Meshes_from_2D_Text-to-Image_Models_ICCV_2023_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-s_holodeck"><summary>Holodeck<small>语言与程序组合</small></summary><div class="paper-body"><div class="meta">2024 · CVPR2024</div><dl class="io"><dt>输入</dt><dd>自然语言场景需求</dd><dt>输出</dt><dd>房间结构、检索到的物体网格及空间变换</dd></dl><p>把一句房间描述拆成墙面、门窗、家具和摆放规则。语言模型负责提出候选意图，几何求解器把物体放进空间；读图时要区分资产从哪里来，以及摆放是否满足约束。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>语言需求</span></li>
+<li><span>房间与门窗规划</span></li>
+<li><span>物体描述及资产检索</span></li>
+<li><span>空间约束求解</span></li>
+<li><span>可交互环境</span></li>
+</ol>
+<p class="limit">边界：依赖已有资产库和关系约束的正确性；并非全部物体从零生成，也不能仅凭布局成功推断完整物理合理性。</p>
+<figure><a href="mindmap_assets/s_holodeck_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/s_holodeck_fig2.png" alt="Holodeck：论文原图 · 系统流程图"></a><figcaption>论文原图 · 系统流程图 · PDF 第 3 页 · Fig. 2<br>原文Fig.2按房间、门窗、物体选择、布局约束组织模块，含语言交互与中间场景示例。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2024/html/Yang_Holodeck_Language_Guided_Generation_of_3D_Embodied_AI_Environments_CVPR_2024_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-s_scenelanguage"><summary>Scene Language<small>语言与程序组合</small></summary><div class="paper-body"><div class="meta">2025 · CVPR2025</div><dl class="io"><dt>输入</dt><dd>文字或图像描述，经场景语言表示组织</dd><dt>输出</dt><dd>程序、词语与神经嵌入共同描述的结构化场景</dd></dl><p>把场景写成能执行的说明书：程序决定有几个物体、如何排列，词语说明物体是什么，嵌入补足外观。这样可以显式修改数量与结构，并通过适配接口接入不同渲染器。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>场景语言：程序、词语、嵌入</span></li>
+<li><span>执行并展开实体</span></li>
+<li><span>渲染器重参数化</span></li>
+<li><span>场景渲染</span></li>
+</ol>
+<p class="limit">边界：表示结构清楚不等于已经获得完整可靠的几何资产；具体能力取决于生成表示和渲染后端，不能视为通用世界编译器。</p>
+<figure><a href="mindmap_assets/vis_s_scenelanguage.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/vis_s_scenelanguage.png" alt="Scene Language：论文原图 · 方法接口流程图"></a><figcaption>论文原图 · 方法接口流程图 · PDF 第 4 页 · Fig. 3 (complete graphic, excluding original prose caption)<br>原文Fig.3展示场景语言到实体、渲染参数和图像的接口，不是完整神经网络训练架构。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2025/html/Zhang_The_Scene_Language_Representing_Scenes_with_Programs_Words_and_Embeddings_CVPR_2025_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-s_midi"><summary>MIDI<small>多实例联合扩散</small></summary><div class="paper-body"><div class="meta">2025 · CVPR2025</div><dl class="io"><dt>输入</dt><dd>单张场景图像、物体区域及掩码等局部条件</dd><dt>输出</dt><dd>多个物体的三维潜表示与可分离三维实例</dd></dl><p>不是把场景压成一整块模型，而是为多个物体保留独立三维潜变量。各物体一边读取自己的图像区域，一边通过注意力交流，从而兼顾实例外观和场景关系，便于后续分离编辑。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>场景图像与实例条件</span></li>
+<li><span>各物体带噪潜变量</span></li>
+<li><span>共享DiT及多实例注意力</span></li>
+<li><span>三维解码</span></li>
+<li><span>可分离物体场景</span></li>
+</ol>
+<p class="limit">边界：重遮挡、小物体和复杂相互作用仍困难；看不见的几何是条件推断，不能当作由单张图片观测到的真实结构。</p>
+<figure><a href="mindmap_assets/s_midi_fig3.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/s_midi_fig3.png" alt="MIDI：论文原图 · 模型架构图"></a><figcaption>论文原图 · 模型架构图 · PDF 第 3 页 · Fig. 3<br>原文Fig.3保留局部与全局图像条件、共享DiT、多实例及交叉注意力模块，可追踪联合去噪的信息流。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2025/html/Huang_MIDI_Multi-Instance_Diffusion_for_Single_Image_to_3D_Scene_Generation_CVPR_2025_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-s_worldgen"><summary>WorldGen<small>世界生成系统</small></summary><div class="paper-body"><div class="meta">2026 · CVPR2026</div><dl class="io"><dt>输入</dt><dd>文本世界描述与规划产生的结构条件</dd><dt>输出</dt><dd>场景几何、物体资产及其组合关系</dd></dl><p>先规划人能走到哪里，再把场景重建、物体分解和细节增强串起来。它让世界生成从展示一幅景观走向可探索空间；读图时要分清规划、重建和资产加工各自解决的问题。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本与场景规划</span></li>
+<li><span>场景重建</span></li>
+<li><span>物体分解</span></li>
+<li><span>资产增强</span></li>
+<li><span>可探索三维世界</span></li>
+</ol>
+<p class="limit">边界：系统针对有界场景，复杂多层结构与实例复用仍受限；端到端展示不代表每个模块和训练数据均可独立复现。</p>
+<figure><a href="mindmap_assets/s_worldgen_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/s_worldgen_fig2.png" alt="WorldGen：论文原图 · 系统流程图（含中间结果）"></a><figcaption>论文原图 · 系统流程图（含中间结果） · PDF 第 3 页 · Fig. 2<br>原文Fig.2展示四阶段系统及第一人称视图示例，适合说明模块关系，不是逐层网络结构图。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2026/html/Wang_WorldGen_From_Text_to_Traversable_and_Interactive_3D_Worlds_CVPR_2026_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+</section>
+<section class="section"><h2>人体与 Avatar · 论文与框架</h2><p class="note">形体、外观和可驱动性分开检查</p>
+<details class="paper" id="paper-h_tada"><summary>TADA<small>人体先验＋优化</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · 3DV</div><dl class="io"><dt>输入</dt><dd>文本提示，以及优化时采样的姿态和表情</dd><dt>输出</dt><dd>SMPL-X网格、细分顶点位移、UV纹理和模板蒙皮权重</dd></dl><p>先把角色保存在规范人体空间，再借助模板蒙皮变成不同姿态。优化时反复让角色换动作和表情，检查几何与纹理是否仍一致，因此目标不只是生成一张好看的正面人物图。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本与SMPL-X模板</span></li>
+<li><span>规范空间位移及纹理</span></li>
+<li><span>姿态、表情采样与蒙皮</span></li>
+<li><span>随机视角下图像／法线指导</span></li>
+<li><span>可驱动人体网格</span></li>
+</ol>
+<p class="limit">边界：人体模板限制极端体型和拓扑；可驱动网格不等于真实布料动力学，生成纹理中的烘焙光照也不等于可重光照材质。</p>
+<figure><a href="mindmap_assets/h_tada_fig3.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/h_tada_fig3.png" alt="TADA：论文原图 · 表示与优化流程图"></a><figcaption>论文原图 · 表示与优化流程图 · PDF 第 3 页 · Fig. 3<br>原文Fig.3包含SMPL-X加位移、动画采样、渲染与红色更新回路，能说明规范空间到姿态空间的关系。</figcaption></figure>
+<div class="sources"><a href="https://tada.is.tue.mpg.de/" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-h_humangaussian"><summary>HumanGaussian<small>人体先验＋优化</small></summary><div class="paper-body"><div class="meta">2024 · CVPR2024</div><dl class="io"><dt>输入</dt><dd>文本提示、SMPL-X初始化与姿态骨架条件</dd><dt>输出</dt><dd>人体表面初始化的三维高斯</dd></dl><p>先在人体模板表面撒下三维高斯，再同时检查渲染颜色与深度。骨架条件告诉模型人体的大致结构，两路指导分别约束外观与形状，最后清理漂浮高斯，减少只看颜色造成的错觉。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本、模板与姿态骨架</span></li>
+<li><span>人体表面初始化高斯</span></li>
+<li><span>RGB及深度渲染</span></li>
+<li><span>双分支SDS优化</span></li>
+<li><span>高斯清理</span></li>
+</ol>
+<p class="limit">边界：手足细节与漂浮伪影仍可能失败；高斯外观质量和模板初始化本身不能证明具备完整的蒙皮或稳定动画能力。</p>
+<figure><a href="mindmap_assets/h_humangaussian_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/h_humangaussian_fig2.png" alt="HumanGaussian：论文原图 · 模型与优化流程图"></a><figcaption>论文原图 · 模型与优化流程图 · PDF 第 4 页 · Fig. 2<br>原文Fig.2明确展示骨架条件、RGB/深度两路、初始化与清理；没有把任意姿态驱动作为该图证明的能力。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2024/html/Liu_HumanGaussian_Text-Driven_3D_Human_Generation_with_Gaussian_Splatting_CVPR_2024_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-h_sith"><summary>SiTH<small>单图生成式重建</small></summary><div class="paper-body"><div class="meta">2024 · CVPR2024</div><dl class="io"><dt>输入</dt><dd>单张人体图像及估计的人体姿态、UV和轮廓条件</dd><dt>输出</dt><dd>人体先验辅助的隐式SDF与颜色场，输出纹理网格</dd></dl><p>单张照片没有拍到背面，SiTH先生成一个可能的背面，再把前后图像、法线和人体先验合起来重建网格。两阶段把补全与几何恢复分开，也提醒我们背面细节并不是原图的直接证据。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>单图与人体姿态估计</span></li>
+<li><span>UV、轮廓条件背面生成</span></li>
+<li><span>前后图像及法线</span></li>
+<li><span>人体先验辅助SDF与颜色查询</span></li>
+<li><span>纹理网格</span></li>
+</ol>
+<p class="limit">边界：人体姿态估计错误和不可见区域歧义会传播到网格；合理的背面不一定是真实背面，静态纹理网格也不自动具备动画绑定。</p>
+<figure><a href="mindmap_assets/vis_h_sith.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/vis_h_sith.png" alt="SiTH：论文原图 · 两阶段模型流程图"></a><figcaption>论文原图 · 两阶段模型流程图 · PDF 第 3 页 · Fig. 2 (complete graphic, excluding original prose caption)<br>原文Fig.2保留输入、UV/Mask、背面生成、人体先验、SDF/RGB及图例，可直接解释条件来源与两阶段分工。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2024/html/Ho_SiTH_Single-view_Textured_Human_Reconstruction_with_Image-Conditioned_Diffusion_CVPR_2024_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-h_tera"><summary>TeRA<small>人体潜表示生成</small></summary><div class="paper-body"><div class="meta">2025 · ICCV2025</div><dl class="io"><dt>输入</dt><dd>文本生成条件；输出可由SMPL-X姿态参数驱动</dd><dt>输出</dt><dd>与SMPL-X对齐的UV高斯属性图及结构化潜空间</dd></dl><p>让人体表面在结构化图中拥有稳定位置，再在这个空间学习文本生成。离线蒸馏和扩散训练承担主要学习成本，推理时解码出高斯属性，借助人体参数驱动同一个角色变换姿态。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>离线数据与重建模型蒸馏</span></li>
+<li><span>文本条件潜扩散</span></li>
+<li><span>结构化潜图解码</span></li>
+<li><span>UV高斯属性采样</span></li>
+<li><span>人体参数驱动与渲染</span></li>
+</ol>
+<p class="note">第一步是离线学习；后续为文本采样、解码及驱动。原图同时展示训练与生成。</p>
+<p class="limit">边界：快速推理依赖离线数据和训练投入；静态训练数据难以表达运动衣褶，模板对宽松长裙等偏离身体表面的结构仍有限制。</p>
+<figure><a href="mindmap_assets/h_tera_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/h_tera_fig2.png" alt="TeRA：论文原图 · 训练与生成框架图"></a><figcaption>论文原图 · 训练与生成框架图 · PDF 第 4 页 · Fig. 2<br>原文Fig.2分别展示数据、表示、蒸馏编码与结构化LDM；图中有多阶段训练，不能把全图当成单次推理顺序。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/ICCV2025/html/Wang_TeRA_Rethinking_Text-guided_Realistic_3D_Avatar_Generation_ICCV_2025_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+</section>
+<section class="section"><h2>动态 4D · 论文与框架</h2><p class="note">物体随时间变化 ≠ 相机环绕静态模型</p>
+<details class="paper" id="paper-d_4dfy"><summary>4D-fy<small>多先验蒸馏</small></summary><div class="paper-body"><div class="meta">2024 · CVPR2024</div><dl class="io"><dt>输入</dt><dd>描述对象及动作的文本提示</dd><dt>输出</dt><dd>静态与动态多尺度哈希特征构成的四维辐射场</dd></dl><p>让不同老师各管一部分：三维感知图像先验帮助稳定多视图，普通图像先验改善外观，视频先验提供运动趋势。被优化的是随物理时间变化的辐射场，而不是简单的相机绕拍视频。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本与静态、动态哈希表示</span></li>
+<li><span>指定相机和时间渲染</span></li>
+<li><span>图像及视频先验指导</span></li>
+<li><span>交替梯度更新</span></li>
+<li><span>四维辐射场</span></li>
+</ol>
+<p class="limit">边界：逐实例优化成本较高，复杂运动仍困难；多个先验提供的指导可能冲突，加入时间变量不代表自然满足物理规律。</p>
+<figure><a href="mindmap_assets/d_4dfy_fig3.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/d_4dfy_fig3.png" alt="4D-fy：论文原图 · 动态表示与优化架构图"></a><figcaption>论文原图 · 动态表示与优化架构图 · PDF 第 4 页 · Fig. 3<br>原文Fig.3左侧区分三维静态和四维动态哈希，右侧展示三种指导与交替反传回路。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2024/html/Bahmani_4D-fy_Text-to-4D_Generation_Using_Hybrid_Score_Distillation_Sampling_CVPR_2024_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-d_dg4d"><summary>DreamGaussian4D<small>规范形状＋形变</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · arXiv</div><dl class="io"><dt>输入</dt><dd>单张输入图像，进一步生成驱动视频</dd><dt>输出</dt><dd>规范三维高斯及随时间变化的位置、旋转和尺度形变</dd></dl><p>一张图像分成两条线：一条建立静态三维高斯，另一条生成动作视频。随后让规范高斯随时间变形，既追随参考视角中的动作，也接受其他视角的扩散指导，形成可换视角的动态对象。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>输入图像</span></li>
+<li><span>静态高斯与驱动视频两路生成</span></li>
+<li><span>时间条件形变</span></li>
+<li><span>参考视角重建及随机视角SDS</span></li>
+<li><span>动态高斯</span></li>
+</ol>
+<p class="limit">边界：驱动视频不是实际观测的三维运动；遮挡、大形变和拓扑变化仍困难，后续网格或纹理处理也不自动保证逐顶点对应。</p>
+<figure><a href="mindmap_assets/vis_d_dg4d.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/vis_d_dg4d.png" alt="DreamGaussian4D：论文原图 · 局部方法流程图"></a><figcaption>论文原图 · 局部方法流程图 · PDF 第 4 页 · Fig. 2, upper panel I: Image-to-4D GS Generation only<br>原文Fig.2上半部，只展示Image-to-4D GS Generation；不含后续网格纹理细化，不能称为完整系统图。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2312.17142" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-d_l4gm"><summary>L4GM<small>前馈时序重建</small></summary><div class="paper-body"><div class="meta">首次公开 2024 · NeurIPS</div><dl class="io"><dt>输入</dt><dd>单目视频与首帧生成的多视图图像；文本或单图应用需要上游视频生成</dd><dt>输出</dt><dd>逐时刻的三维高斯序列</dd></dl><p>把视频帧与首帧的多视图线索送进同一个重建网络，用跨视角注意力协调空间，用时间注意力协调动作。输出是一串三维高斯状态；它不要求所有运动都由一个规范形状的形变解释。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>单目视频与首帧多视图</span></li>
+<li><span>跨视角及时间注意力</span></li>
+<li><span>逐时刻高斯预测</span></li>
+<li><span>时序插值</span></li>
+<li><span>动态三维渲染</span></li>
+</ol>
+<p class="limit">边界：依赖训练分布及上游多视图生成质量；网络推理时间不包含所有前处理，逐时刻高斯也不保证持久的点身份对应。</p>
+<figure><a href="mindmap_assets/d_l4gm_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/d_l4gm_fig2.png" alt="L4GM：论文原图 · 模型架构图"></a><figcaption>论文原图 · 模型架构图 · PDF 第 3 页 · Fig. 2<br>原文Fig.2包含输入视频、复制的首帧多视图、两种注意力与高斯序列；不把复制的多视图误作各时刻真实观测。</figcaption></figure>
+<div class="sources"><a href="https://research.nvidia.com/labs/toronto-ai/l4gm/" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-d_sculpt4d"><summary>Sculpt4D<small>原生三维时序生成</small></summary><div class="paper-body"><div class="meta">2026 · CVPR2026</div><dl class="io"><dt>输入</dt><dd>视频或图像序列，作为逐帧图像条件</dd><dt>输出</dt><dd>三维形状潜变量序列，解码为动态网格序列</dd></dl><p>直接在三维形状潜空间里生成一段动态网格，而不是只生成二维运动画面。首帧锚点帮助保持对象身份，时间稀疏注意力交换运动信息；一致采样则减少训练时无关的跨帧抖动。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>图像序列条件</span></li>
+<li><span>噪声三维潜变量序列</span></li>
+<li><span>带时间注意力的条件去噪</span></li>
+<li><span>形状潜变量解码</span></li>
+<li><span>网格序列</span></li>
+</ol>
+<p class="note">上方为生成流程；论文图中的一致表面采样与编码属于训练数据处理。</p>
+<p class="limit">边界：网格序列不自动等于共享拓扑、绑定完成的动画资产；统一对应及纹理传播仍需额外配准，图中表面编码涉及训练数据流程。</p>
+<figure><a href="mindmap_assets/d_sculpt4d_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/d_sculpt4d_fig2.png" alt="Sculpt4D：论文原图 · 时空生成框架图"></a><figcaption>论文原图 · 时空生成框架图 · PDF 第 3 页 · Fig. 2<br>原文Fig.2展示一致采样、编码、图像交叉注意力、稀疏时空掩码和网格解码；采样编码部分不是要求用户输入三维网格。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2026/html/Yin_Sculpt4D_Generating_4D_Shapes_via_Sparse-Attention_Diffusion_Transformers_CVPR_2026_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+</section>
+<section class="section"><h2>图文联合 · 论文与框架</h2><p class="note">同一次生成同时使用独立文字和参考图像</p>
+<details class="paper" id="paper-o_screen_sdfusion"><summary>SDFusion<small>三维潜空间联合</small></summary><div class="paper-body"><div class="meta">首次公开 2022 · CVPR2023</div><dl class="io"><dt>输入</dt><dd>独立文字＋参考图像；所配补全实验额外给了部分形状。</dd><dt>输出</dt><dd>三维截断带符号距离场（T-SDF），再提取几何表面。</dd></dl><p>先把三维距离场压缩为潜变量，再让图像和文字共同引导去噪，分别调节模态权重。它展示了多条件形状控制，但所配结果还给了部分形状，不能据此宣称仅凭图文获得同等约束。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>图像与文本；补全任务另给部分形状</span></li>
+<li><span>CLIP 图像与 BERT 文本特征</span></li>
+<li><span>三维潜变量扩散与按模态 CFG</span></li>
+<li><span>VQ-VAE 解码为 T-SDF</span></li>
+<li><span>提取几何表面</span></li>
+</ol>
+<p class="limit">边界：Figure 8 是带部分形状的联合定性结果；单任务表格不是统一图文冲突基准，指导权重也不是几何硬约束或条件满足保证。</p>
+<figure><a href="mindmap_assets/joint_sdfusion_fig8.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/joint_sdfusion_fig8.png" alt="SDFusion：论文原图 · 定性结果"></a><figcaption>论文原图 · 定性结果 · PDF 第 8 页 · Figure 8<br>原论文 PDF 第8页 Figure 8：部分形状、图像、文本与指导权重网格；是结果图，不是架构图。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2023/html/Cheng_SDFusion_Multimodal_3D_Shape_Completion_Reconstruction_and_Generation_CVPR_2023_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-j_tigon"><summary>TIGON<small>三维潜空间联合</small></summary><div class="paper-body"><div class="meta">首次公开 2026 · CVPR 2026, pp. 604–614</div><dl class="io"><dt>输入</dt><dd>独立文字＋单张参考 RGB 图像；不要求用户提供初始三维网格。</dd><dt>输出</dt><dd>UniLat3D 统一三维资产潜变量，经对应解码器得到 Mesh 或 3DGS。</dd></dl><p>图像分支和文本分支处理同一个三维潜变量，逐层交换特征，再平均速度预测推进采样。固定参考图改变文字的实验支持未见区域控制，但冲突案例仍可能偏向图像类别。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>参考图像与独立文本</span></li>
+<li><span>DINO 与 CLIP 条件编码</span></li>
+<li><span>同一三维潜变量进入双 DiT 并交换特征</span></li>
+<li><span>平均速度预测并迭代采样</span></li>
+<li><span>统一潜变量解码为 Mesh 或 3DGS</span></li>
+</ol>
+<p class="limit">边界：以 UniLat3D 潜空间和训练资产为基础；图文冲突时可偏向图像，不保证任意文字覆盖可见属性。交换特征后两路输出已非相互独立的单模态专家。</p>
+<figure><a href="mindmap_assets/mm_tigon_arch.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/mm_tigon_arch.png" alt="TIGON：论文原图 · 方法框架"></a><figcaption>论文原图 · 方法框架 · PDF 第 4 页 · Figure 3<br>双 DiT 分支交换特征，平均速度预测；原图中央 T 表示去噪时间步。</figcaption></figure>
+<div class="sources"><a href="https://openaccess.thecvf.com/content/CVPR2026/html/Cen_Text-Image_Conditioned_3D_Generation_CVPR_2026_paper.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-j_ipdreamer"><summary>IPDreamer<small>逐对象联合优化</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · ICLR 2025</div><dl class="io"><dt>输入</dt><dd>文字＋一张或多张参考图；内部先获得粗三维。多图扩展另用定位词和掩码。</dd><dt>输出</dt><dd>逐步优化得到的纹理网格；粗阶段使用 NeRF。</dd></dl><p>先获得粗三维对象，再把文本与复杂图像提示共同送入二维扩散先验，通过可微渲染优化几何和纹理。它控制的是生成外观，并非严格扫描；参考图甚至可能压过文字要求的材料。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>文本、图像提示及内部粗三维初始化</span></li>
+<li><span>估计法线并编码图像与文本条件</span></li>
+<li><span>渲染粗网格并构造联合 IP-SDS 指导</span></li>
+<li><span>逐步优化几何和纹理</span></li>
+<li><span>输出可渲染纹理网格</span></li>
+</ol>
+<p class="limit">边界：需要逐对象优化；生成初始化与已有网格编辑要分开。Figure 5 的铁胸甲案例受皮革图像提示支配，不能宣称文本对图像属性具有任意覆盖能力。</p>
+<figure><a href="mindmap_assets/mm_ipdreamer_arch.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/mm_ipdreamer_arch.png" alt="IPDreamer：论文原图 · 方法框架"></a><figcaption>论文原图 · 方法框架 · PDF 第 4 页 · Figure 2<br>完整方法框架及单图／多图支路。整体文本同时进入噪声预测器的证据另见第 5 页式 (2)–(7)。</figcaption></figure>
+<div class="sources"><a href="https://proceedings.iclr.cc/paper_files/paper/2025/hash/56280ad5fb53967fd55e4ba1b1cfc418-Abstract-Conference.html" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-j_imagedream"><summary>ImageDream<small>联合多视图先验</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · arXiv:2312.02201</div><dl class="io"><dt>输入</dt><dd>文字＋单张参考图；内部使用规范相机设定和采样视角。</dd><dt>输出</dt><dd>中间为多视图图像，最终通过蒸馏优化得到三维辐射场（NeRF）。</dd></dl><p>文本通路保留语义，参考图的局部特征和像素潜变量共同控制多视图扩散，再用该先验优化三维辐射场。接口确实同时接收图文，但主要实验采用相互匹配的条件，不能证明任意冲突都可解决。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>用户文本与参考图像</span></li>
+<li><span>文字通路及局部/像素图像控制器</span></li>
+<li><span>联合条件多视图扩散先验</span></li>
+<li><span>多视图 score distillation 优化 NeRF</span></li>
+<li><span>渲染所得三维辐射场</span></li>
+</ol>
+<p class="note">多视图图像是中间结果，后续还有逐对象 NeRF 优化。</p>
+<p class="limit">边界：多视图图像本身不是三维资产；最终仍需 NeRF 优化。评测主要由对应文本生成参考图，独立冲突控制证据有限，强图像约束和相机失配也可能损害细节或几何。</p>
+<p class="note">此处提供依据论文整理的中文框架，尚未收录该论文的原图。</p>
+<div class="sources"><a href="https://arxiv.org/abs/2312.02201" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+</section>
+<footer>23 个细分类 · 37 篇代表工作 · 35 幅论文原图。中文流程为教学简化；原图注明完整框架、局部模块或结果。原综述检索截至 2026-10-13；2026-10-15 补充核验高斯生成方法。</footer>
+</main>
+<script>
+document.querySelectorAll('a[data-paper]').forEach(link=>link.addEventListener('click',()=>{
+ const panel=document.getElementById(link.getAttribute('href').slice(1));
+ if(panel)panel.open=true;
+}));
+function revealHash(){const id=decodeURIComponent(location.hash.slice(1));const panel=document.getElementById(id);if(panel&&panel.matches('details.paper')){panel.open=true;requestAnimationFrame(()=>panel.scrollIntoView({block:'start'}));}}
+window.addEventListener('hashchange',revealHash);revealHash();
+</script>
+</body></html>
