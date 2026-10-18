@@ -50,6 +50,8 @@
 <li><a data-paper href="#paper-o_clay">CLAY</a></li>
 <li><a data-paper href="#paper-o_trellis">TRELLIS</a></li>
 <li><a data-paper href="#paper-o_triposg">TripoSG</a></li>
+<li class="representation-group">生成式重建＋Agent 精修</li>
+<li><a data-paper href="#paper-o_gator">GATOR</a></li>
 </ul></li>
 <li class="route"><strong>网格自回归</strong><small>逐步生成几何词序列</small><ul class="works">
 <li><a data-paper href="#paper-o_meshgpt">MeshGPT</a></li>
@@ -273,6 +275,18 @@
 <p class="limit">边界：预处理中的水密化和内部结构删除会改变目标形状，精细表面也不等于正确内部拓扑。</p>
 <figure><a href="mindmap_assets/o_triposg_pipeline.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_triposg_pipeline.png" alt="TripoSG：论文原图 · 生成网络"></a><figcaption>论文原图 · 生成网络 · PDF 第 5 页 · Figure 3<br>原文Figure 3展开图像条件生成网络、交叉注意力和MoE；不包含完整SDF VAE训练管线，不能把各规模变体混为一个模型。</figcaption></figure>
 <div class="sources"><a href="https://arxiv.org/abs/2502.06608" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
+<details class="paper" id="paper-o_gator"><summary>GATOR<small>原生 3D 生成 · 图像条件流模型＋Agent 精修</small></summary><div class="paper-body"><div class="meta">首次公开 2026-10-08 · arXiv 预印本 · 2610.11215v1</div><dl class="io"><dt>输入</dt><dd>一张或多张 RGB 观测；每视图还需目标掩码、相机内参／位姿及深度（可由图像估计），深度反投影为 pointmap；另有类别名或对象描述等语义条件</dd><dt>输出</dt><dd>稀疏结构 → 几何潜变量与 PBR 材质潜变量 → 带材质的完整物体网格及场景相对位姿；再由 Agent 局部精修</dd></dl><p>先让三维生成模型补出物体，再让会使用 Blender 的 Agent 有针对性地修整。GATOR 在 TRELLIS.2 的结构—几何—外观级联中加入多模态融合：把同一图像小块的 RGB、目标掩码和点图特征放在一起交换信息，再汇集不同视角。结构阶段保留周围场景以判断遮挡；几何与材质阶段把去除背景的图像特征投影到已生成的三维位置，保留观察到的细节。类别名与描述提供语义先验。生成资产随后成为 Agent 的起点，用于补缺失部件、修孔洞与拓扑、改 UV 或材质。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
+<li><span>RGB＋目标掩码＋相机与深度／点图</span></li>
+<li><span>同一 patch 的模态混合，再跨视图聚合</span></li>
+<li><span>类别语义引导结构流，生成稀疏三维位置</span></li>
+<li><span>投影图像特征＋描述引导几何流与材质流</span></li>
+<li><span>解码带材质物体并细化平移与尺度</span></li>
+<li><span>Agent 局部编辑 → 同条件渲染检查 → 保留或撤销</span></li>
+</ol>
+<p class="note">流模型在三维潜空间中从噪声逐步生成结构、几何与外观；这是原生三维生成的共享模型采样，不是 SDS 教师经渲染器反传、不是 LRM 一次前馈，也不以 3D Gaussian 为主表示。Agent 精修是后续的编辑—渲染—检查循环，与前面流采样的步数分开。主评测中 Toys4K 和桌面物体通常输入四视图，ScanNet++ 输入一至十视图；LM-O／HB 使用传感器深度，HANDAL／ScanNet++ 使用估计深度与相机，不能把它们的条件混写成完全相同的纯 RGB 输入。</p>
+<p class="limit">边界：依赖掩码和相机／深度估计；严重漏分割或错误深度仍会损害重建。不可见表面是生成先验推断，不能视为真实观测。Agent 依赖私有模型，通常每物体增加最多十分钟；局部精修主要改善外观与结构细节，在 HANDAL 上仍略微恶化部分平均几何指标。类别名／VLM 描述作为辅助语义条件，不代表已经验证任意用户文字与图像冲突时的独立联合控制。</p>
+<figure><a href="mindmap_assets/o_gator_fig2.png" target="_blank" rel="noopener"><img loading="lazy" src="mindmap_assets/o_gator_fig2.png" alt="GATOR：论文原图 · 原生三维生成与 Agent 精修框架"></a><figcaption>论文原图 · 原生三维生成与 Agent 精修框架 · PDF 第 4 页 · Figure 2<br>Figure 2：先看左侧 A 的 RGB／Mask／Pointmap 与局部模态混合，再按 1→2→3 读结构流、几何流、外观流；紫色路径是文字条件，蓝色投影路径把观测特征送入几何和材质模型。右侧 B 才是 Agent 根据已有资产与输入图像进行编辑、渲染、比较并保留或撤销修改。两部分机制需分开理解。来源：Wu 等，GATOR，arXiv:2610.11215v1，PDF 第4页；直接裁剪原图。</figcaption></figure>
+<div class="sources"><a href="https://arxiv.org/abs/2610.11215" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
 <details class="paper" id="paper-o_meshgpt"><summary>MeshGPT<small>网格自回归</small></summary><div class="paper-body"><div class="meta">首次公开 2023 · CVPR 2024</div><dl class="io"><dt>输入</dt><dd>无条件网格生成或已有几何token上下文；非任意文本/图像条件系统</dd><dt>输出</dt><dd>离散几何token → 三角面序列</dd></dl><p>先从训练网格学习离散的几何词表，再让自回归网络逐步预测词表序列，并解码成三角面。它直接学习网格组织方式，可作为资产生成的基础组件；原始工作不能被当成完整的开放文本到三维系统。</p><h3>中文信息流 <small>· 教学简化</small></h3><ol class="flow">
 <li><span>离线：网格局部几何编码</span></li>
 <li><span>残差量化学习词表</span></li>
@@ -515,7 +529,7 @@
 <p class="note">此处提供依据论文整理的中文框架，尚未收录该论文的原图。</p>
 <div class="sources"><a href="https://arxiv.org/abs/2312.02201" target="_blank" rel="noopener">阅读原论文 ↗</a><a href="#map-top">↑ 回到完整思维导图</a></div></div></details>
 </section>
-<footer>23 个细分类 · 38 篇代表工作 · 36 幅论文原图。中文流程为教学简化；原图注明完整框架、局部模块或结果。原综述检索截至 2026-10-13；2026-10-15 补充高斯生成方法，2026-10-18 补充 LEGO-Anything。</footer>
+<footer>23 个细分类 · 39 篇代表工作 · 37 幅论文原图。中文流程为教学简化；原图注明完整框架、局部模块或结果。原综述检索截至 2026-10-13；2026-10-15 补充高斯生成方法，2026-10-18 补充 LEGO-Anything 与 GATOR。</footer>
 </main>
 <script>
 document.querySelectorAll('a[data-paper]').forEach(link=>link.addEventListener('click',()=>{
