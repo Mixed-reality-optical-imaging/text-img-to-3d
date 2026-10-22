@@ -1,6 +1,6 @@
 # Text / Image-to-3D 图文思维导图
 
-面向入门学习的三维生成技术地图：23 个细分类、39 篇代表论文、37 幅高清论文配图。
+面向入门学习的三维生成技术地图：29 个细分类、53 篇代表论文、51 幅高清论文配图。
 
 在线版本：[打开图文思维导图](https://text-image-3d-research-map.decentseal10.chatgpt.site/)。Sites 版本目前按站点权限访问；本仓库可独立下载并在本地运行。
 
@@ -33,3 +33,9 @@ python -m http.server 8000
 ## 来源说明
 
 论文配图用于研究学习，来源、图号与解释见网页相应图注；版权归原作者或出版方所有。仓库不为这些第三方图片授予额外许可。方法描述属于学习辅助材料，请结合原始论文核对具体结论与实验条件。
+
+## 2026-10-22 frontier supplement
+
+Added 12 recent primary-paper method cards and 24 short reading entries for the 2026-04-22 to 2026-10-22 window, plus Buffalo and TRELLIS.2 cards already covered in the survey. The map now contains 53 complete cards and 51 original-paper images. All 39 prior anchors remain available. The evaluation and verification topic distinguishes automatic models from human and Oracle studies.
+
+The local survey is maintained in Word, PDF and Markdown. This repository contains the static map and its images; paper PDFs and video lessons are not part of this website upload.
